@@ -1,2 +1,2 @@
-def hello() -> str:
-    return "Hello from python-uv!"
+def hello(name: str) -> str:
+    return "Hello, " + name

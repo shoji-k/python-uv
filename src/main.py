@@ -2,7 +2,7 @@ from project import hello
 
 
 def main():
-    print(hello())
+    print(hello("world"))
 
 
 if __name__ == "__main__":
