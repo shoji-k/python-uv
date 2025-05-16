@@ -1,10 +1,21 @@
 import hashlib
 import json
 import datetime
+from typing import Dict, List, Any
 
 
 class Block:
-    def __init__(self, index, timestamp, prev_hash, transaction):
+    def __init__(
+        self, index: int, timestamp: str, prev_hash: str, transaction: str
+    ):
+        """ブロックを初期化する
+
+        Args:
+            index (int): ブロックの番号
+            timestamp (str): タイムスタンプ
+            prev_hash (str): 前ブロックのハッシュ値
+            transaction (str): 取引データ
+        """
         self.index = index  # そのブロックの番号(配列番号的な
         self.timestamp = timestamp  # 前後関係と言いましたがBitcoinで言うと時系列で取引記録がされるので一応日付を記録
         self.prev_hash = prev_hash  # 一つ前のブロックのハッシュ値
@@ -13,9 +24,9 @@ class Block:
             self.calc_hash()
         )  # これはこのブロック自身のハッシュ値を計算します。
 
-    def calc_hash(self):  # ハッシュ値の計算
+    def calc_hash(self) -> str:  # ハッシュ値の計算
         # ここではnow_hash(自分自身のブロック)を除いたデータをjsonに変換しsha256でハッシュ化します。
-        joined_data = {
+        joined_data: Dict[str, Any] = {
             "index": self.index,
             "timestamp": self.timestamp,
             "prev_hash": self.prev_hash,
@@ -26,7 +37,9 @@ class Block:
 
 
 # 実際にいくつかブロックを生成しブロックチェーン的なものを作る
-block_chain = []  # ただの配列ですがブロックを追加していくブロックチェーンです。
+block_chain: List[
+    Block
+] = []  # ただの配列ですがブロックを追加していくブロックチェーンです。
 
 # 一番最初のブロックは一つ前のブロックが存在しないため、一つ前のブロックのハッシュ値を'-'として作成してしまいます。
 genesis = Block(0, str(datetime.datetime.now()), "-", "取引データ")
